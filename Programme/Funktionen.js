@@ -8,7 +8,6 @@ const resetknopf = document.querySelector(".resetknopf");
 const malknopf = document.querySelector(".mal");
 const geteiltknopf = document.querySelector(".durch");
 
-
 let ersteZahl = null;
 let operator = null;
 let neueZahlStarten = false;
@@ -16,27 +15,24 @@ let neueZahlStarten = false;
 function Zwischenergebnis(zweiteZahl) {
   if (operator === "+") {
     ersteZahl = ersteZahl + zweiteZahl;
-
-} else if (operator === "-") {
-  ersteZahl = ersteZahl - zweiteZahl;
-
-} else if (operator === "*") {
-  ersteZahl = ersteZahl * zweiteZahl;
-} else if (operator === "/") {
-  if (zweiteZahl === 0) {
-    display.textContent = "Error";
-    ersteZahl = null;
-    operator = null;
-    neueZahlStarten = true;
-    return;
-  } else {
-    ersteZahl = ersteZahl / zweiteZahl;
+  } else if (operator === "-") {
+    ersteZahl = ersteZahl - zweiteZahl;
+  } else if (operator === "*") {
+    ersteZahl = ersteZahl * zweiteZahl;
+  } else if (operator === "/") {
+    if (zweiteZahl === 0) {
+      display.textContent = "Error";
+      ersteZahl = null;
+      operator = null;
+      neueZahlStarten = true;
+      return;
+    } else {
+      ersteZahl = ersteZahl / zweiteZahl;
+    }
   }
-}
 
-display.textContent = ersteZahl;
+  display.textContent = ersteZahl;
 }
-
 
 // Zahleneingabe
 zahlenknoepfe.forEach(function (knopf) {
@@ -58,12 +54,12 @@ zahlenknoepfe.forEach(function (knopf) {
 loeschknopf.addEventListener("click", function () {
   let aktuellerWert = display.textContent;
 
-// Wenn nur eine Zahl vorhanden ist geht es zurück auf Null
-if (aktuellerWert.length === 1){
-  display.textContent = "0";
-} else {
-  // Letzes Zeichen entfernen
-  display.textContent = aktuellerWert.slice(0, -1);
+  // Wenn nur eine Zahl vorhanden ist geht es zurück auf Null
+  if (aktuellerWert.length === 1) {
+    display.textContent = "0";
+  } else {
+    // Letzes Zeichen entfernen
+    display.textContent = aktuellerWert.slice(0, -1);
   }
 });
 
@@ -75,9 +71,7 @@ resetknopf.addEventListener("click", function () {
   neueZahlStarten = true;
 });
 
-
-  
-  // Addition
+// Addition
 plusknopf.addEventListener("click", function () {
   const aktuelleZahl = Number(display.textContent);
   if (ersteZahl === null) {
@@ -102,10 +96,8 @@ minusknopf.addEventListener("click", function () {
   neueZahlStarten = true;
 });
 
-
-
 // Multiplikation
-malknopf.addEventListener("click", function() {
+malknopf.addEventListener("click", function () {
   const aktuelleZahl = Number(display.textContent);
 
   if (ersteZahl === null) {
@@ -114,10 +106,9 @@ malknopf.addEventListener("click", function() {
     Zwischenergebnis(aktuelleZahl);
   }
 
- operator = "*";
+  operator = "*";
   neueZahlStarten = true;
 });
-
 
 // Division
 geteiltknopf.addEventListener("click", function () {
@@ -128,36 +119,25 @@ geteiltknopf.addEventListener("click", function () {
   } else if (neueZahlStarten === false) {
     Zwischenergebnis(aktuelleZahl);
   }
- 
+
   operator = "/";
   neueZahlStarten = true;
 });
 
-
 // Gleich
 gleichknopf.addEventListener("click", function () {
   if (operator === null || ersteZahl === null) {
-  return;
+    return;
   }
- 
- const zweiteZahl = Number(display.textContent);
- Zwischenergebnis(zweiteZahl);
 
- operator = null;
- neueZahlStarten = true;
+  const zweiteZahl = Number(display.textContent);
+  Zwischenergebnis(zweiteZahl);
+
+  operator = null;
+  neueZahlStarten = true;
 });
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- /*console.log("display:", display);
+
+/*console.log("display:", display);
 console.log("zahlenknoepfe:", zahlenknoepfe);
 console.log("plusknopf", plusknopf);
 console.log("minusknopf", minusknopf);
@@ -165,14 +145,7 @@ console.log("gleichknopf", gleichknopf);
 console.log("loeschknopf", loeschknopf)
 console.log("resetknopf", resetknopf);*/
 
- 
- 
- 
- 
- 
- 
- 
-  /* const zweiteZahl = Number(display.textContent);
+/* const zweiteZahl = Number(display.textContent);
 
   if (operator === "+") {
     display.textContent = ersteZahl + zweiteZahl;
