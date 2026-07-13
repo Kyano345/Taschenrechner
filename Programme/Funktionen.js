@@ -7,32 +7,15 @@ const loeschknopf = document.querySelector(".löschknopf");
 const resetknopf = document.querySelector(".resetknopf");
 const malknopf = document.querySelector(".mal");
 const geteiltknopf = document.querySelector(".durch");
+const wurzelknopf = document.querySelector(".wurzelknopf");
+const quadratknopf = document.querySelector(".quadratknopf");
+const potenzknopf = document.querySelector(".potenzknopf");
 
 let ersteZahl = null;
 let operator = null;
 let neueZahlStarten = false;
-
-function Zwischenergebnis(zweiteZahl) {
-  if (operator === "+") {
-    ersteZahl = ersteZahl + zweiteZahl;
-  } else if (operator === "-") {
-    ersteZahl = ersteZahl - zweiteZahl;
-  } else if (operator === "*") {
-    ersteZahl = ersteZahl * zweiteZahl;
-  } else if (operator === "/") {
-    if (zweiteZahl === 0) {
-      display.textContent = "Error";
-      ersteZahl = null;
-      operator = null;
-      neueZahlStarten = true;
-      return;
-    } else {
-      ersteZahl = ersteZahl / zweiteZahl;
-    }
-  }
-
-  display.textContent = ersteZahl;
-}
+let Zahlvorpotenz = null;
+let Operatorvorpotenz = null;
 
 // Zahleneingabe
 zahlenknoepfe.forEach(function (knopf) {
@@ -68,6 +51,8 @@ resetknopf.addEventListener("click", function () {
   display.textContent = "0";
   ersteZahl = null;
   operator = null;
+  Zahlvorpotenz = null;
+  Operatorvorpotenz = null;
   neueZahlStarten = true;
 });
 
@@ -77,7 +62,11 @@ plusknopf.addEventListener("click", function () {
   if (ersteZahl === null) {
     ersteZahl = aktuelleZahl;
   } else if (neueZahlStarten === false) {
-    Zwischenergebnis(aktuelleZahl);
+    if (operator === "^") {
+      potenzAbschliessen(aktuelleZahl);
+    } else {
+      Zwischenergebnis(aktuelleZahl);
+    }
   }
   operator = "+";
   neueZahlStarten = true;
@@ -90,7 +79,11 @@ minusknopf.addEventListener("click", function () {
   if (ersteZahl === null) {
     ersteZahl = aktuelleZahl;
   } else if (neueZahlStarten === false) {
-    Zwischenergebnis(aktuelleZahl);
+    if (operator === "^") {
+      potenzAbschliessen(aktuelleZahl);
+    } else {
+      Zwischenergebnis(aktuelleZahl);
+    }
   }
   operator = "-";
   neueZahlStarten = true;
@@ -103,7 +96,11 @@ malknopf.addEventListener("click", function () {
   if (ersteZahl === null) {
     ersteZahl = aktuelleZahl;
   } else if (neueZahlStarten === false) {
-    Zwischenergebnis(aktuelleZahl);
+    if (operator === "^") {
+      potenzAbschliessen(aktuelleZahl);
+    } else {
+      Zwischenergebnis(aktuelleZahl);
+    }
   }
 
   operator = "*";
@@ -117,7 +114,11 @@ geteiltknopf.addEventListener("click", function () {
   if (ersteZahl === null) {
     ersteZahl = aktuelleZahl;
   } else if (neueZahlStarten === false) {
-    Zwischenergebnis(aktuelleZahl);
+    if (operator === "^") {
+      potenzAbschliessen(aktuelleZahl);
+    } else {
+      Zwischenergebnis(aktuelleZahl);
+    }
   }
 
   operator = "/";
@@ -131,34 +132,103 @@ gleichknopf.addEventListener("click", function () {
   }
 
   const zweiteZahl = Number(display.textContent);
-  Zwischenergebnis(zweiteZahl);
-
+  if (operator === "^") {
+    potenzAbschliessen(zweiteZahl);
+  } else {
+    Zwischenergebnis(zweiteZahl);
+  }
   operator = null;
   neueZahlStarten = true;
 });
 
-/*console.log("display:", display);
-console.log("zahlenknoepfe:", zahlenknoepfe);
-console.log("plusknopf", plusknopf);
-console.log("minusknopf", minusknopf);
-console.log("gleichknopf", gleichknopf);
-console.log("loeschknopf", loeschknopf)
-console.log("resetknopf", resetknopf);*/
+//Wurzel
+wurzelknopf.addEventListener("click", function () {
+  const Zahl = Number(display.textContent);
 
-/* const zweiteZahl = Number(display.textContent);
-
-  if (operator === "+") {
-    display.textContent = ersteZahl + zweiteZahl;
-
-  } else if (operator === "-") {
-    display.textContent = ersteZahl - zweiteZahl;
-  } else if (operator === "*") {
-    display.textContent = ersteZahl * zweiteZahl
-  } else if (operator === "/") {
-    display.textContent = ersteZahl / zweiteZahl
+  if (Zahl < 0) {
+    display.textContent = "Error";
+    ersteZahl = null;
+    operator = null;
+    neueZahlStarten = true;
+    return;
   }
-  
-  ersteZahl = null;
-  operator = null;
+  let ergebnis = Math.sqrt(Zahl);
+  display.textContent = ergebnis;
+  if (operator !== null && ersteZahl !== null) {
+    Zwischenergebnis(ergebnis);
+  }
   neueZahlStarten = true;
-});*/
+});
+
+//Quadrat
+quadratknopf.addEventListener("click", function () {
+  const Zahl = Number(display.textContent);
+  let ergebnis = Zahl * Zahl;
+  display.textContent = ergebnis;
+  //für Kettenrechnungen
+  if (operator !== null && ersteZahl !== null) {
+    Zwischenergebnis(ergebnis);
+  }
+  neueZahlStarten = true;
+});
+
+//Potenz
+
+//Funktion
+function Zwischenergebnis(zweiteZahl) {
+  if (operator === "+") {
+    ersteZahl = ersteZahl + zweiteZahl;
+  } else if (operator === "-") {
+    ersteZahl = ersteZahl - zweiteZahl;
+  } else if (operator === "*") {
+    ersteZahl = ersteZahl * zweiteZahl;
+  } else if (operator === "/") {
+    if (zweiteZahl === 0) {
+      display.textContent = "Error";
+      ersteZahl = null;
+      operator = null;
+      neueZahlStarten = true;
+      return;
+    } else {
+      ersteZahl = ersteZahl / zweiteZahl;
+    }
+  } else if (operator === "^") {
+    ersteZahl = ersteZahl ** zweiteZahl;
+  }
+  display.textContent = ersteZahl;
+}
+/*
+  Von hier anschauen
+*/
+//Knopf
+potenzknopf.addEventListener("click", function () {
+  const aktuelleZahl = Number(display.textContent); //Displaywert in Zahl umwandeln
+  if (
+    operator !== null && // Wenn bereits ein Operator vorhanden ist, außer Potenz, und eine Zahl eingegeben wurde, wird das Zwischenergebnis berechnet
+    operator !== "^" && // Wenn der aktuelle Operator nicht Potenz ist, wird das Zwischenergebnis berechnet
+    ersteZahl !== null && // Wenn bereits eine erste Zahl vorhanden ist, wird das Zwischenergebnis berechnet
+    neueZahlStarten === false
+  ) {
+    Zahlvorpotenz = ersteZahl;
+    Operatorvorpotenz = operator;
+
+    ersteZahl = aktuelleZahl;
+  } else if (ersteZahl === null) {
+    ersteZahl = aktuelleZahl;
+  }
+  operator = "^";
+  neueZahlStarten = true;
+});
+
+// Zusatzfunktion für korrekte Reihenfolge beim Potenzrechnen
+function potenzAbschliessen(exponent) {
+  Zwischenergebnis(exponent);
+  if (Operatorvorpotenz !== null) {
+    const potenzErgebnis = ersteZahl;
+    ersteZahl = Zahlvorpotenz;
+    operator = Operatorvorpotenz;
+    Zahlvorpotenz = null;
+    Operatorvorpotenz = null;
+    Zwischenergebnis(potenzErgebnis);
+  }
+}
