@@ -1,3 +1,5 @@
+// version vom 14.08.2026
+
 const display = document.getElementById("display");
 const zahlenknoepfe = document.querySelectorAll(".zahlenknöpfe");
 const plusknopf = document.querySelector(".plus");
