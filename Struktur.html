@@ -1,0 +1,62 @@
+<!doctype html>
+<!-- Dokumenttyp als HTML5 deklarieren -->
+<html lang="de">
+  <!--Sprache auf Deutsch setzen-->
+  <head>
+    <meta charset="UTF-8" />
+    <!--Sonderzeichen korrekt darstellen-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Responsives Design ermöglichen für Geräte -->
+    <title>Taschenrechnerprojekt</title>
+    <!-- Titel der Webseite -->
+    <link rel="stylesheet" href="Design.css" />
+    <!-- Verknüpfung mit der CSS-Datei für das Design -->
+  </head>
+
+  <body>
+    <!-- Hauptinhalt der Webseite -->
+    <h1>Der supercoole Taschenrechner von Kyano</h1>
+
+    <div class="box">
+      <div class="display" id="display">0</div>
+
+      <div class="rechner-unten">
+        <div class="Zusatzknöpfe">
+          <div class="löschknopf">&lt;=</div>
+          <!--&lt weil < wird für tags benutzt-->
+
+          <div class="wurzelknopf">√x</div>
+          <div class="resetknopf">RA</div>
+          <div class="quadratknopf">x^2</div>
+          <div class="potenzknopf">x^y</div>
+        </div>
+
+        <div class="zahlen-und-operatoren">
+          <div class="zahlenbox">
+            <div class="zahlenknöpfe eins">1</div>
+            <div class="zahlenknöpfe zwei">2</div>
+            <div class="zahlenknöpfe drü">3</div>
+            <div class="zahlenknöpfe vier">4</div>
+            <div class="zahlenknöpfe füf">5</div>
+            <div class="zahlenknöpfe sechs">6</div>
+            <div class="zahlenknöpfe sieben">7</div>
+            <div class="zahlenknöpfe acht">8</div>
+            <div class="zahlenknöpfe nün">9</div>
+            <div class="zahlenknöpfe null">0</div>
+          </div>
+
+          <div class="rechenoperator">
+            <div class="rechenoperatorenknöpfe plus">+</div>
+            <div class="rechenoperatorenknöpfe minus">-</div>
+            <div class="rechenoperatorenknöpfe mal">x</div>
+            <div class="rechenoperatorenknöpfe durch">÷</div>
+          </div>
+        </div>
+
+        <div class="resultatknopf">=</div>
+      </div>
+    </div>
+
+    <script src="Funktionen.js"></script>
+  </body>
+</html>
