@@ -1,4 +1,4 @@
-// version vom 14.08.2026
+// version vom 14.08.2026 !
 
 const display = document.getElementById("display");
 const zahlenknoepfe = document.querySelectorAll(".zahlenknöpfe");
@@ -127,7 +127,7 @@ quadratknopf.addEventListener("click", function () {
   Zahlbereit = true;
 });
 
-//Potenz (test)
+//Potenz (test)..
 
 //Funktion
 function Zwischenergebnis(zweiteZahl) {
