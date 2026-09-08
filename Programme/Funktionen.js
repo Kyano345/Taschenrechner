@@ -127,7 +127,7 @@ quadratknopf.addEventListener("click", function () {
   Zahlbereit = true;
 });
 
-//Potenz
+//Potenz (test)
 
 //Funktion
 function Zwischenergebnis(zweiteZahl) {
