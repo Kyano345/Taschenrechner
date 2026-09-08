@@ -16,22 +16,23 @@ const potenzknopf = document.querySelector(".potenzknopf");
 let ersteZahl = null;
 let operator = null;
 let neueZahlStarten = false;
-let Zahlvorpotenz = null;
-let Operatorvorpotenz = null;
+let Zahlbereit = false; // true, sobald im Display eine fertige Zahl steht, die verrechnet werden darf
+let Wartestapel = []; // zurückgestellte Rechnungen mit tieferem Rang (für Punkt vor Strich)
 
 // Zahleneingabe
 zahlenknoepfe.forEach(function (knopf) {
   knopf.addEventListener("click", function () {
     const zahl = knopf.textContent;
 
-    if (neueZahlStarten === true) {
+       if (neueZahlStarten === true) {
       display.textContent = zahl;
       neueZahlStarten = false;
     } else if (display.textContent === "0") {
       display.textContent = zahl;
-    } else {
-      display.textContent += zahl;
+        } else if (Number(display.textContent + zahl) <= Number.MAX_SAFE_INTEGER) {
+      display.textContent += zahl; // nur anhängen, solange die Zahl exakt bleibt
     }
+    Zahlbereit = true; // im Display steht jetzt eine verrechenbare Zahl
   });
 });
 
@@ -39,13 +40,18 @@ zahlenknoepfe.forEach(function (knopf) {
 loeschknopf.addEventListener("click", function () {
   let aktuellerWert = display.textContent;
 
-  // Wenn nur eine Zahl vorhanden ist geht es zurück auf Null
-  if (aktuellerWert.length === 1) {
+   // Letztes Zeichen entfernen
+  const gekürzt = aktuellerWert.slice(0, -1);
+
+  // Bleibt nichts Verwertbares übrig, zurück auf Null
+  if (gekürzt === "" || gekürzt === "-") {
     display.textContent = "0";
   } else {
-    // Letzes Zeichen entfernen
-    display.textContent = aktuellerWert.slice(0, -1);
+    display.textContent = gekürzt;
   }
+
+  neueZahlStarten = false; // nach dem Löschen weitertippen statt neu anfangen
+  Zahlbereit = true;
 });
 
 // Clear
@@ -53,132 +59,79 @@ resetknopf.addEventListener("click", function () {
   display.textContent = "0";
   ersteZahl = null;
   operator = null;
-  Zahlvorpotenz = null;
-  Operatorvorpotenz = null;
+  Wartestapel = [];
   neueZahlStarten = true;
+  Zahlbereit = false;
 });
 
 // Addition
 plusknopf.addEventListener("click", function () {
-  const aktuelleZahl = Number(display.textContent);
-  if (ersteZahl === null) {
-    ersteZahl = aktuelleZahl;
-  } else if (neueZahlStarten === false) {
-    if (operator === "^") {
-      potenzAbschliessen(aktuelleZahl);
-    } else {
-      Zwischenergebnis(aktuelleZahl);
-    }
-  }
-  operator = "+";
-  neueZahlStarten = true;
+  OperatorDruecken("+");
 });
 
 // Subtraktion
 minusknopf.addEventListener("click", function () {
-  const aktuelleZahl = Number(display.textContent);
-
-  if (ersteZahl === null) {
-    ersteZahl = aktuelleZahl;
-  } else if (neueZahlStarten === false) {
-    if (operator === "^") {
-      potenzAbschliessen(aktuelleZahl);
-    } else {
-      Zwischenergebnis(aktuelleZahl);
-    }
-  }
-  operator = "-";
-  neueZahlStarten = true;
+  OperatorDruecken("-");
 });
 
 // Multiplikation
 malknopf.addEventListener("click", function () {
-  const aktuelleZahl = Number(display.textContent);
-
-  if (ersteZahl === null) {
-    ersteZahl = aktuelleZahl;
-  } else if (neueZahlStarten === false) {
-    if (operator === "^") {
-      potenzAbschliessen(aktuelleZahl);
-    } else {
-      Zwischenergebnis(aktuelleZahl);
-    }
-  }
-
-  operator = "*";
-  neueZahlStarten = true;
+  OperatorDruecken("*");
 });
 
 // Division
 geteiltknopf.addEventListener("click", function () {
-  const aktuelleZahl = Number(display.textContent);
-
-  if (ersteZahl === null) {
-    ersteZahl = aktuelleZahl;
-  } else if (neueZahlStarten === false) {
-    if (operator === "^") {
-      potenzAbschliessen(aktuelleZahl);
-    } else {
-      Zwischenergebnis(aktuelleZahl);
-    }
-  }
-
-  operator = "/";
-  neueZahlStarten = true;
+  OperatorDruecken("/");
 });
+
 
 // Gleich
 gleichknopf.addEventListener("click", function () {
+  if (Fehlerangezeigt() === true) {
+    return; // nach "Error" passiert nichts, bis RA oder eine neue Zahl kommt
+  }
   if (operator === null || ersteZahl === null) {
     return;
   }
-
-  const zweiteZahl = Number(display.textContent);
-  if (operator === "^") {
-    potenzAbschliessen(zweiteZahl);
-  } else {
-    Zwischenergebnis(zweiteZahl);
-  }
+  Zusammenrechnen(Displaywert(), 0); // Rang 0 ist tiefer als alles, also wird alles Offene abgeschlossen
+  ersteZahl = null; // Ergebnis bleibt nur im Display; die nächste Eingabe startet frisch
   operator = null;
+  Wartestapel = [];
   neueZahlStarten = true;
+  Zahlbereit = false;
 });
 
 //Wurzel
 wurzelknopf.addEventListener("click", function () {
-  const Zahl = Number(display.textContent);
-
-  if (Zahl < 0) {
-    display.textContent = "Error";
-    ersteZahl = null;
-    operator = null;
-    neueZahlStarten = true;
+  if (Fehlerangezeigt() === true) {
     return;
   }
-  let ergebnis = Math.sqrt(Zahl);
-  display.textContent = ergebnis;
-  if (operator !== null && ersteZahl !== null) {
-    Zwischenergebnis(ergebnis);
+  const Zahl = Displaywert();
+  if (Zahl < 0) {
+    Fehler();
+    return;
   }
+  Anzeigen(Math.sqrt(Zahl)); // verändert nur den Displaywert, offene Rechnungen bleiben liegen
   neueZahlStarten = true;
+  Zahlbereit = true;
 });
 
 //Quadrat
 quadratknopf.addEventListener("click", function () {
-  const Zahl = Number(display.textContent);
-  let ergebnis = Zahl * Zahl;
-  display.textContent = ergebnis;
-  //für Kettenrechnungen
-  if (operator !== null && ersteZahl !== null) {
-    Zwischenergebnis(ergebnis);
+  if (Fehlerangezeigt() === true) {
+    return;
   }
+  const Zahl = Displaywert();
+  Anzeigen(Zahl * Zahl);
   neueZahlStarten = true;
+  Zahlbereit = true;
 });
 
 //Potenz
 
 //Funktion
 function Zwischenergebnis(zweiteZahl) {
-  if (operator === "+") {
+   if (operator === "+") {
     ersteZahl = ersteZahl + zweiteZahl;
   } else if (operator === "-") {
     ersteZahl = ersteZahl - zweiteZahl;
@@ -186,51 +139,108 @@ function Zwischenergebnis(zweiteZahl) {
     ersteZahl = ersteZahl * zweiteZahl;
   } else if (operator === "/") {
     if (zweiteZahl === 0) {
-      display.textContent = "Error";
-      ersteZahl = null;
-      operator = null;
-      neueZahlStarten = true;
-      return;
-    } else {
-      ersteZahl = ersteZahl / zweiteZahl;
+      Fehler();
+      return false; // meldet dem Aufrufer, dass nicht weitergerechnet werden darf
     }
+    ersteZahl = ersteZahl / zweiteZahl;
   } else if (operator === "^") {
     ersteZahl = ersteZahl ** zweiteZahl;
   }
-  display.textContent = ersteZahl;
+  Anzeigen(ersteZahl);
+  return true;
 }
-/*
-  Von hier anschauen
-*/
-//Knopf
-potenzknopf.addEventListener("click", function () {
-  const aktuelleZahl = Number(display.textContent); //Displaywert in Zahl umwandeln
-  if (
-    operator !== null && // Wenn bereits ein Operator vorhanden ist, außer Potenz, und eine Zahl eingegeben wurde, wird das Zwischenergebnis berechnet
-    operator !== "^" && // Wenn der aktuelle Operator nicht Potenz ist, wird das Zwischenergebnis berechnet
-    ersteZahl !== null && // Wenn bereits eine erste Zahl vorhanden ist, wird das Zwischenergebnis berechnet
-    neueZahlStarten === false
-  ) {
-    Zahlvorpotenz = ersteZahl;
-    Operatorvorpotenz = operator;
 
-    ersteZahl = aktuelleZahl;
-  } else if (ersteZahl === null) {
-    ersteZahl = aktuelleZahl;
-  }
-  operator = "^";
-  neueZahlStarten = true;
+//Potenzknopf
+potenzknopf.addEventListener("click", function () {
+  OperatorDruecken("^");
 });
 
-// Zusatzfunktion für korrekte Reihenfolge beim Potenzrechnen
-function potenzAbschliessen(exponent) {
-  Zwischenergebnis(exponent);
-  if (Operatorvorpotenz !== null) {
-    const potenzErgebnis = ersteZahl;
-    ersteZahl = Zahlvorpotenz;
-    operator = Operatorvorpotenz;
-    Zahlvorpotenz = null;
-    Operatorvorpotenz = null;
-    Zwischenergebnis(potenzErgebnis);
+
+
+function Anzeigen(wert) {
+  if (wert === Infinity || wert === -Infinity) {
+    display.textContent = "To infinity and beyond";
+  } else {
+    display.textContent = wert;
   }
+}
+
+
+
+function Displaywert() {
+  if (display.textContent === "To infinity and beyond") {
+    return Infinity;
+  }
+  return Number(display.textContent);
+}
+
+// Gibt den Vorrang eines Rechenzeichens zurück: höherer Wert = wird zuerst gerechnet
+function Rangordnung(zeichen) {
+  if (zeichen === "+" || zeichen === "-") {
+    return 1; // Strichrechnung
+  }
+  if (zeichen === "*" || zeichen === "/") {
+    return 2; // Punktrechnung
+  }
+  return 3; // Potenz
+}
+
+// Wird von allen Rechenzeichen aufgerufen (+, -, x, ÷, x^y)
+function OperatorDruecken(neuerOperator) {
+  if (Fehlerangezeigt() === true) {
+    return;
+  }
+  const aktuelleZahl = Displaywert();
+  if (ersteZahl === null) {
+    ersteZahl = aktuelleZahl; // erste Zahl der Rechnung merken
+  } else if (Zahlbereit === true) {
+    Zusammenrechnen(aktuelleZahl, Rangordnung(neuerOperator));
+    if (Fehlerangezeigt() === true) {
+      return; // Division durch 0 hat den Rechner bereits zurückgesetzt
+    }
+  }
+  operator = neuerOperator;
+  neueZahlStarten = true;
+  Zahlbereit = false;
+}
+
+// Entscheidet, ob sofort gerechnet oder die offene Rechnung zurückgestellt wird
+function Zusammenrechnen(zweiteZahl, neuerRang) {
+  if (Rangordnung(operator) < neuerRang) {
+    // Das neue Zeichen bindet stärker, also die laufende Rechnung parken
+    Wartestapel.push({ zahl: ersteZahl, operator: operator });
+    ersteZahl = zweiteZahl;
+    return;
+  }
+  if (Zwischenergebnis(zweiteZahl) === false) {
+    return;
+  }
+  // Danach alle geparkten Rechnungen abarbeiten, die mindestens gleich stark binden
+  while (
+    Wartestapel.length > 0 &&
+    Rangordnung(Wartestapel[Wartestapel.length - 1].operator) >= neuerRang
+  ) {
+    const eintrag = Wartestapel.pop(); // zuletzt geparkte Rechnung zurückholen
+    const ergebnis = ersteZahl;
+    ersteZahl = eintrag.zahl;
+    operator = eintrag.operator;
+    if (Zwischenergebnis(ergebnis) === false) {
+      return;
+    }
+  }
+}
+
+// Prüft, ob im Display gerade eine Fehlermeldung steht
+function Fehlerangezeigt() {
+  return display.textContent === "Error";
+}
+
+// Setzt den Rechner nach einem unerlaubten Vorgang komplett zurück
+function Fehler() {
+  display.textContent = "Error";
+  ersteZahl = null;
+  operator = null;
+  Wartestapel = [];
+  neueZahlStarten = true;
+  Zahlbereit = false;
 }
