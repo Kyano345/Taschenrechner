@@ -29,8 +29,10 @@ zahlenknoepfe.forEach(function (knopf) {
       neueZahlStarten = false;
     } else if (display.textContent === "0") {
       display.textContent = zahl;
-        } else if (Number(display.textContent + zahl) <= Number.MAX_SAFE_INTEGER) {
-      display.textContent += zahl; // nur anhängen, solange die Zahl exakt bleibt
+         } else if (
+      display.textContent.replace("-", "").replace(".", "").length < 16
+    ) {
+      display.textContent += zahl; // max. 16 Ziffern, sonst rechnet JavaScript ungenau
     }
     Zahlbereit = true; // im Display steht jetzt eine verrechenbare Zahl
   });
