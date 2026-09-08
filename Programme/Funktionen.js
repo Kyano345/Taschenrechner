@@ -1,4 +1,4 @@
-// version vom 14.08.2026 !
+// version vom 08.09.2026
 
 const display = document.getElementById("display");
 const zahlenknoepfe = document.querySelectorAll(".zahlenknöpfe");
