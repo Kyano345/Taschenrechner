@@ -1,17 +1,18 @@
 // version vom 08.09.2026
 
-const display = document.getElementById("display");
-const zahlenknoepfe = document.querySelectorAll(".zahlenknöpfe");
-const plusknopf = document.querySelector(".plus");
-const minusknopf = document.querySelector(".minus");
-const gleichknopf = document.querySelector(".resultatknopf");
-const loeschknopf = document.querySelector(".löschknopf");
-const resetknopf = document.querySelector(".resetknopf");
-const malknopf = document.querySelector(".mal");
-const geteiltknopf = document.querySelector(".durch");
-const wurzelknopf = document.querySelector(".wurzelknopf");
-const quadratknopf = document.querySelector(".quadratknopf");
-const potenzknopf = document.querySelector(".potenzknopf");
+const Display = document.getElementById("Display");
+const Zahlenknoepfe = document.querySelectorAll(".Zahlenknöpfe");
+const Plusknopf = document.querySelector(".plus");
+const Minusknopf = document.querySelector(".minus");
+const Gleichknopf = document.querySelector(".Resultatknopf");
+const Loeschknopf = document.querySelector(".Löschknopf");
+const Resetknopf = document.querySelector(".Resetknopf");
+const Malknopf = document.querySelector(".mal");
+const Geteiltknopf = document.querySelector(".durch");
+const Wurzelknopf = document.querySelector(".Wurzelknopf");
+const Quadratknopf = document.querySelector(".Quadratknopf");
+const Potenzknopf = document.querySelector(".Potenzknopf");
+const Kommaknopf = document.querySelector(".Kommaknopf");
 
 let ersteZahl = null;
 let operator = null;
@@ -20,36 +21,50 @@ let Zahlbereit = false; // true, sobald im Display eine fertige Zahl steht, die 
 let Wartestapel = []; // zurückgestellte Rechnungen mit tieferem Rang (für Punkt vor Strich)
 
 // Zahleneingabe
-zahlenknoepfe.forEach(function (knopf) {
+Zahlenknoepfe.forEach(function (knopf) {
   knopf.addEventListener("click", function () {
     const zahl = knopf.textContent;
 
        if (neueZahlStarten === true) {
-      display.textContent = zahl;
+      Display.textContent = zahl;
       neueZahlStarten = false;
-    } else if (display.textContent === "0") {
-      display.textContent = zahl;
+    } else if (Display.textContent === "0") {
+      Display.textContent = zahl;
          } else if (
-      display.textContent.replace("-", "").replace(".", "").length < 16
+      Display.textContent.replace("-", "").replace(".", "").length < 16
     ) {
-      display.textContent += zahl; // max. 16 Ziffern, sonst rechnet JavaScript ungenau
+      Display.textContent += zahl; // max. 16 Ziffern, sonst rechnet JavaScript ungenau
     }
     Zahlbereit = true; // im Display steht jetzt eine verrechenbare Zahl
   });
 });
 
+// Komma
+Kommaknopf.addEventListener("click", function () {
+  if (Fehlerangezeigt() === true) {
+    return;
+  }
+  if (neueZahlStarten === true) {
+    Display.textContent = "0."; // neue Zahl beginnt mit "0."
+    neueZahlStarten = false;
+  } else if (Display.textContent.includes(".") === false) {
+    Display.textContent += "."; // nur anhängen, wenn noch kein Punkt drin ist
+  }
+  Zahlbereit = true;
+});
+
 //löschen
-loeschknopf.addEventListener("click", function () {
-  let aktuellerWert = display.textContent;
+Loeschknopf.addEventListener("click", function () {
+  let aktuellerWert = Display.textContent;
 
    // Letztes Zeichen entfernen
   const gekürzt = aktuellerWert.slice(0, -1);
 
   // Bleibt nichts Verwertbares übrig, zurück auf Null
   if (gekürzt === "" || gekürzt === "-") {
-    display.textContent = "0";
+    Display.textContent = "0";
   } else {
-    display.textContent = gekürzt;
+    Display.textContent = gekürzt;
   }
 
   neueZahlStarten = false; // nach dem Löschen weitertippen statt neu anfangen
@@ -57,8 +72,8 @@ loeschknopf.addEventListener("click", function () {
 });
 
 // Clear
-resetknopf.addEventListener("click", function () {
-  display.textContent = "0";
+Resetknopf.addEventListener("click", function () {
+  Display.textContent = "0";
   ersteZahl = null;
   operator = null;
   Wartestapel = [];
@@ -67,28 +82,28 @@ resetknopf.addEventListener("click", function () {
 });
 
 // Addition
-plusknopf.addEventListener("click", function () {
+Plusknopf.addEventListener("click", function () {
   OperatorDruecken("+");
 });
 
 // Subtraktion
-minusknopf.addEventListener("click", function () {
+Minusknopf.addEventListener("click", function () {
   OperatorDruecken("-");
 });
 
 // Multiplikation
-malknopf.addEventListener("click", function () {
+Malknopf.addEventListener("click", function () {
   OperatorDruecken("*");
 });
 
 // Division
-geteiltknopf.addEventListener("click", function () {
+Geteiltknopf.addEventListener("click", function () {
   OperatorDruecken("/");
 });
 
 
 // Gleich
-gleichknopf.addEventListener("click", function () {
+Gleichknopf.addEventListener("click", function () {
   if (Fehlerangezeigt() === true) {
     return; // nach "Error" passiert nichts, bis RA oder eine neue Zahl kommt
   }
@@ -104,7 +119,7 @@ gleichknopf.addEventListener("click", function () {
 });
 
 //Wurzel
-wurzelknopf.addEventListener("click", function () {
+Wurzelknopf.addEventListener("click", function () {
   if (Fehlerangezeigt() === true) {
     return;
   }
@@ -119,7 +134,7 @@ wurzelknopf.addEventListener("click", function () {
 });
 
 //Quadrat
-quadratknopf.addEventListener("click", function () {
+Quadratknopf.addEventListener("click", function () {
   if (Fehlerangezeigt() === true) {
     return;
   }
@@ -129,9 +144,7 @@ quadratknopf.addEventListener("click", function () {
   Zahlbereit = true;
 });
 
-//Potenz (test)..
-
-//Funktion
+// Zwischenergebnis
 function Zwischenergebnis(zweiteZahl) {
    if (operator === "+") {
     ersteZahl = ersteZahl + zweiteZahl;
@@ -153,7 +166,7 @@ function Zwischenergebnis(zweiteZahl) {
 }
 
 //Potenzknopf
-potenzknopf.addEventListener("click", function () {
+Potenzknopf.addEventListener("click", function () {
   OperatorDruecken("^");
 });
 
@@ -161,19 +174,25 @@ potenzknopf.addEventListener("click", function () {
 
 function Anzeigen(wert) {
   if (wert === Infinity || wert === -Infinity) {
-    display.textContent = "To infinity and beyond";
+    Display.textContent = "To infinity and beyond";
+    return;
+  }
+  if (String(wert).length > 16) {
+    // toPrecision kürzt auf eine feste Anzahl gültiger Ziffern
+    // Number() entfernt danach überflüssige Nullen am Ende
+    Display.textContent = Number(wert.toPrecision(15));
   } else {
-    display.textContent = wert;
+    Display.textContent = wert;
   }
 }
 
 
 
 function Displaywert() {
-  if (display.textContent === "To infinity and beyond") {
+  if (Display.textContent === "To infinity and beyond") {
     return Infinity;
   }
-  return Number(display.textContent);
+  return Number(Display.textContent);
 }
 
 // Gibt den Vorrang eines Rechenzeichens zurück: höherer Wert = wird zuerst gerechnet
@@ -234,12 +253,12 @@ function Zusammenrechnen(zweiteZahl, neuerRang) {
 
 // Prüft, ob im Display gerade eine Fehlermeldung steht
 function Fehlerangezeigt() {
-  return display.textContent === "Error";
+  return Display.textContent === "Error";
 }
 
 // Setzt den Rechner nach einem unerlaubten Vorgang komplett zurück
 function Fehler() {
-  display.textContent = "Error";
+  Display.textContent = "Error";
   ersteZahl = null;
   operator = null;
   Wartestapel = [];
