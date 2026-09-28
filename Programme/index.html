@@ -17,47 +17,121 @@
     <!-- Hauptinhalt der Webseite -->
     <h1>Der supercoole Taschenrechner von Kyano</h1>
 
-    <div class="Box">
-      <div class="Display" id="Display">0</div>
-
-      <div class="Rechner-Zentrum">
-        <div class="Zusatzknöpfe">
-          <div class="Löschknopf">&lt;=</div>
-          <!--&lt weil < wird für tags benutzt-->
-
-          <div class="Wurzelknopf">√x</div>
-          <div class="Resetknopf">RA</div>
-          <div class="Quadratknopf">x^2</div>
-          <div class="Potenzknopf">x^y</div>
+    <!-- Umgebung: Farbauswahl links, Rechner rechts -->
+    <div class="Umgebung">
+      <div class="Farbauswahl" id="Farbauswahl">
+        <div class="Farbauswahlkopf" id="Farbauswahlkopf">
+          <span>Kontrastauswahl</span>
+          <!-- span ist ein Textbehälter ohne eigene Darstellung, nur zum Gruppieren -->
+          <span class="Pfeil" id="Pfeil">▸</span>
+          <span class="Farbkästchen" id="Kopffarbkästchen"></span>
         </div>
 
-        <div class="Zahlen-und-Operatoren">
-          <div class="Zahlenbox">
-            <div class="Zahlenknöpfe">1</div>
-            <div class="Zahlenknöpfe">2</div>
-            <div class="Zahlenknöpfe">3</div>
-            <div class="Zahlenknöpfe">4</div>
-            <div class="Zahlenknöpfe">5</div>
-            <div class="Zahlenknöpfe">6</div>
-            <div class="Zahlenknöpfe">7</div>
-            <div class="Zahlenknöpfe">8</div>
-            <div class="Zahlenknöpfe">9</div>
-            <div class="Zahlenknöpfe null">0</div>
+        <div class="Farbauswahlliste" id="Farbauswahlliste">
+          <!-- data-schema speichert den Namen des Schemas direkt am Element, damit JS ihn auslesen kann -->
+          <div class="Farboption" data-schema="Standard">
+            <span>Standard</span>
+            <span class="Farbkästchen"></span>
           </div>
-
-          <div class="Rechenoperator">
-            <div class="Rechenoperatorenknöpfe plus">+</div>
-            <div class="Rechenoperatorenknöpfe minus">-</div>
-            <div class="Rechenoperatorenknöpfe mal">x</div>
-            <div class="Rechenoperatorenknöpfe durch">÷</div>
+          <div class="Farboption" data-schema="Krautgarten">
+            <span>Krautgarten</span>
+            <span class="Farbkästchen"></span>
+          </div>
+          <div class="Farboption" data-schema="Herbstlaub">
+            <span>Herbstlaub</span>
+            <span class="Farbkästchen"></span>
+          </div>
+          <div class="Farboption" data-schema="Lorentpalette">
+            <span>Lorentpalette</span>
+            <span class="Farbkästchen"></span>
           </div>
         </div>
-     </div>
+      </div>
 
-        
-          <div class="Rechner-unten">
+      <div class="Box">
+        <div class="Display" id="Display">0</div>
+
+        <div class="Rechner-Zentrum">
+          <div class="Zusatzknöpfe">
+            <div class="Löschknopf">&lt;=</div>
+            <!--&lt weil < wird für tags benutzt-->
+
+            <div class="Wurzelknopf">√x</div>
+            <div class="Resetknopf">RA</div>
+            <div class="Quadratknopf">x^2</div>
+            <div class="Potenzknopf">x^y</div>
+          </div>
+
+          <div class="Zahlen-und-Operatoren">
+            <div class="Zahlenbox">
+              <div class="Zahlenknöpfe">1</div>
+              <div class="Zahlenknöpfe">2</div>
+              <div class="Zahlenknöpfe">3</div>
+              <div class="Zahlenknöpfe">4</div>
+              <div class="Zahlenknöpfe">5</div>
+              <div class="Zahlenknöpfe">6</div>
+              <div class="Zahlenknöpfe">7</div>
+              <div class="Zahlenknöpfe">8</div>
+              <div class="Zahlenknöpfe">9</div>
+              <div class="Zahlenknöpfe null">0</div>
+            </div>
+
+            <div class="Rechenoperator">
+              <div class="Rechenoperatorenknöpfe plus">+</div>
+              <div class="Rechenoperatorenknöpfe minus">-</div>
+              <div class="Rechenoperatorenknöpfe mal">x</div>
+              <div class="Rechenoperatorenknöpfe durch">÷</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="Rechner-unten">
           <div class="Kommaknopf">.</div>
           <div class="Resultatknopf">=</div>
+        </div>
+      </div>
+
+      <div class="Neonbereich">
+        <div class="Neonzeile">
+          <span>Neon</span>
+          <!-- label verbindet Text und Eingabefeld; ein Klick darauf schaltet die Checkbox -->
+          <label class="Schieberegler">
+            <!-- checkbox = Ankreuzfeld mit zwei Zuständen, hier unsichtbar und durch CSS ersetzt -->
+            <input type="checkbox" id="Neonschalter" />
+            <span class="Schiene"></span>
+          </label>
+        </div>
+
+        <div class="Neonauswahl" id="Neonauswahl">
+          <div class="Neonauswahlkopf" id="Neonauswahlkopf">
+            <span>Neonfarbe</span>
+            <span class="Pfeil" id="Neonpfeil">▸</span>
+            <span class="Farbkästchen" id="Neonkopffarbkästchen"></span>
+          </div>
+
+          <div class="Neonauswahlliste" id="Neonauswahlliste">
+            <div class="Neonoption" data-neonfarbe="Grün">
+              <span>Grün</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Neonoption" data-neonfarbe="Hellblau">
+              <span>Hellblau</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Neonoption" data-neonfarbe="Dunkelblau">
+              <span>Dunkelblau</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Neonoption" data-neonfarbe="Orange">
+              <span>Orange</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Neonoption" data-neonfarbe="Rot">
+              <span>Rot</span>
+              <span class="Farbkästchen"></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 

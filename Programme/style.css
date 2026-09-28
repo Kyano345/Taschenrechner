@@ -1,3 +1,100 @@
+/* :root ist das oberste Element der Seite; hier definierte Variablen gelten überall */
+:root {
+  --Hintergrund: green;
+  --Boxrahmen: rgb(17, 0, 255);
+  --Boxfüllung: rgb(153, 153, 153);
+  --Zahlenknopf: aqua;
+  --Zahlenknopfrahmen: rgb(0, 109, 109);
+  --Zahlenknopfschatten: rgba(0, 57, 214, 0.822);
+  --Operatorknopf: forestgreen;
+  --Operatorknopfschatten: rgba(0, 100, 0, 0.404);
+  --Displayhintergrund: #000;
+  --Displayschrift: chartreuse;
+  --Titelschrift: blue;
+  --Knopfschrift: rgb(0, 0, 0);
+  --Löschknopf: gray;
+  --Löschknopfschatten: rgb(116 116 116);
+  --Resetknopf: red;
+  --Resetknopfschatten: #d20000;
+  --Zusatzknopf: orange;
+  --Zusatzknopfschatten: rgb(214 139 0);
+  --Resultatknopf: limegreen;
+  --Kommaknopf: rgb(0, 225, 255);
+  --Kommaknopfrahmen: rgb(0, 70, 70);
+  --Kommaknopfschatten: rgba(0, 59, 223, 0.705);
+  --Schiene: rgb(0, 109, 109);
+}
+
+/* [data-farbschema="Krautgarten"] greift, sobald das body-Element dieses Attribut trägt; die Variablen überschreiben dann die aus :root */
+body[data-farbschema="Krautgarten"] {
+  --Hintergrund: #967d69;
+  --Boxrahmen: #a8d4ad;
+  --Boxfüllung: #92b9bd;
+  --Zahlenknopf: #f2f79e;
+  --Zahlenknopfrahmen: #a8d4ad;
+  --Zahlenknopfschatten: #967d69;
+  --Operatorknopf: #e8ec67;
+  --Operatorknopfschatten: #967d69;
+  --Resultatknopf: #e8ec67;
+  --Kommaknopf: #f2f79e;
+  --Kommaknopfrahmen: #a8d4ad;
+  --Kommaknopfschatten: #967d69;
+  --Titelschrift: #f2f79e;
+  --Löschknopf: #967d69;
+  --Löschknopfschatten: #967d69;
+  --Resetknopf: #967d69;
+  --Resetknopfschatten: #967d69;
+  --Zusatzknopf: #a8d4ad;
+  --Zusatzknopfschatten: #967d69;
+  --Schiene: #a8d4ad;
+}
+
+body[data-farbschema="Herbstlaub"] {
+  --Hintergrund: #313715;
+  --Boxrahmen: #d16014;
+  --Boxfüllung: #939f5c;
+  --Zahlenknopf: #e2f9b8;
+  --Zahlenknopfrahmen: #939f5c;
+  --Zahlenknopfschatten: #313715;
+  --Operatorknopf: #bbce8a;
+  --Operatorknopfschatten: #313715;
+  --Resultatknopf: #bbce8a;
+  --Kommaknopf: #e2f9b8;
+  --Kommaknopfrahmen: #939f5c;
+  --Kommaknopfschatten: #313715;
+  --Titelschrift: #e2f9b8;
+  --Löschknopf: #313715;
+  --Löschknopfschatten: #313715;
+  --Resetknopf: #d16014;
+  --Resetknopfschatten: #313715;
+  --Zusatzknopf: #bbce8a;
+  --Zusatzknopfschatten: #313715;
+  --Schiene: #313715;
+}
+
+body[data-farbschema="Lorentpalette"] {
+  --Hintergrund: #7161ef;
+  --Boxrahmen: #957fef;
+  --Boxfüllung: #b79ced;
+  --Zahlenknopf: #efd9ce;
+  --Zahlenknopfrahmen: #957fef;
+  --Zahlenknopfschatten: #7161ef;
+  --Operatorknopf: #dec0f1;
+  --Operatorknopfschatten: #7161ef;
+  --Resultatknopf: #dec0f1;
+  --Kommaknopf: #efd9ce;
+  --Kommaknopfrahmen: #957fef;
+  --Kommaknopfschatten: #7161ef;
+  --Titelschrift: #efd9ce;
+  --Löschknopf: #939f5c;
+  --Löschknopfschatten: #313715;
+  --Resetknopf: #d16014;
+  --Resetknopfschatten: #313715;
+  --Zusatzknopf: #bbce8a;
+  --Zusatzknopfschatten: #313715;
+  --Schiene: #957fef;
+}
+
 .Box,
 .Box * {
   user-select: none; /* Verhindert das Markieren von Text und Elementen in der Box */
@@ -5,50 +102,44 @@
 }
 
 body {
-  background-color: green;
+  background-color: var(--Hintergrund);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   font-size: 25px;
   font-weight: bold; /* Fettgedruckt */
-  font-family: Arial, Helvetica, sans-serif; /*Schriftart*/
+  font-family: Arial, Helvetica, sans-serif; /* Schriftart */
   cursor: default; /* Standard-Cursor */
 }
 .Box {
   width: 390px; /* Breite der Box */
   min-height: 500px; /* Mindesthöhe der Box */
-  border: 10px solid rgb(17, 0, 255); /* Darbe + Breite vom Rand */
-  background-color: rgb(153, 153, 153); /* Graue Füllung*/
+  border: 10px solid var(--Boxrahmen); /* Farbe + Breite vom Rand */
+  background-color: var(--Boxfüllung); /* Füllung */
   box-sizing: border-box; /* Border wird in Grösse miteinbezogen */
-  padding: 0;
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
+  margin-top: 45px;
 }
 .Zahlenknöpfe {
   width: 50px;
   height: 50px;
-  background-color: aqua;
-  border: 5px solid rgb(0, 109, 109);
+  background-color: var(--Zahlenknopf);
+  border: 5px solid var(--Zahlenknopfrahmen);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgb(0, 0, 0);
+  color: var(--Knopfschrift);
   border-radius: 50px; /* Runde Knöpfe */
-  box-shadow: 5px 7px 0px rgba(0, 57, 214, 0.822);
+  box-shadow: 5px 7px 0px var(--Zahlenknopfschatten);
 }
 
-.Zahlenknöpfe:hover {
-  filter: brightness(0.5);
-  cursor: pointer;
-}
 .Display {
-  width: 100%;
   height: 112px;
   padding: 15px;
-  background-color: #000;
-  color: chartreuse;
+  background-color: var(--Displayhintergrund);
+  color: var(--Displayschrift);
   font-size: larger;
   display: flex;
   align-items: center;
@@ -58,7 +149,6 @@ body {
   display: flex;
   gap: 20px; /* Abstand zwischen Zahlen und Operatoren */
   align-items: flex-start;
-  width: 100%;
   flex: 1; /* Zahlen und Operatoren nehmen den verfügbaren Platz ein */
   margin-top: auto; /* Zahlen und Operatoren werden am unteren Rand der Box ausgerichtet */
 }
@@ -77,18 +167,17 @@ body {
 .Rechenoperatorenknöpfe {
   width: 90px;
   height: 40px;
-  color: #000;
-  background-color: forestgreen;
+  color: var(--Knopfschrift);
+  background-color: var(--Operatorknopf);
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 50px;
-  box-shadow: 5px 7px 0px rgba(0, 100, 0, 0.404);
+  box-shadow: 5px 7px 0px var(--Operatorknopfschatten);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.Rechenoperatorenknöpfe:hover {
-  filter: brightness(0.5);
-  cursor: pointer;
-}
 .Rechenoperator {
   display: flex;
   flex-direction: column;
@@ -96,23 +185,15 @@ body {
   margin-top: 10px;
   height: 100%;
   width: 90px;
-  cursor: pointer;
   margin-left: auto; /* Rechenoperatoren werden am rechten Rand der Box ausgerichtet */
   margin-right: 10px;
 }
-.Rechenoperator > div {
-  /* Alle Rechenoperatorenknöpfe */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 25px;
-  font-weight: bold;
-}
+
 h1 {
   margin-top: 5px;
   margin-bottom: 5px;
   font-size: larger;
-  color: blue;
+  color: var(--Titelschrift);
   user-select: none;
 }
 .Zusatzknöpfe {
@@ -131,36 +212,29 @@ h1 {
   align-items: center;
   justify-content: center;
   border-radius: 250px;
+  box-sizing: border-box;
 }
-.Zusatzknöpfe > div:hover {
-  filter: brightness(0.5);
-  cursor: pointer;
-}
+
 .Löschknopf {
-  box-shadow: 4px 6px 0px rgb(116 116 116);
-  background-color: gray;
+  box-shadow: 4px 6px 0px var(--Löschknopfschatten);
+  background-color: var(--Löschknopf);
 }
 .Resetknopf {
-  box-shadow: 4px 6px 0px #d20000;
-  background-color: red;
+  box-shadow: 4px 6px 0px var(--Resetknopfschatten);
+  background-color: var(--Resetknopf);
 }
-.Quadratknopf {
-  box-shadow: 4px 6px 0px rgb(214 139 0);
-  background-color: orange;
-}
-.Potenzknopf {
-  box-shadow: 4px 6px 0px rgb(214 139 0);
-  background-color: orange;
-}
+
+.Quadratknopf,
+.Potenzknopf,
 .Wurzelknopf {
-  box-shadow: 4px 6px 0px rgb(214 139 0);
-  background-color: orange;
+  box-shadow: 4px 6px 0px var(--Zusatzknopfschatten);
+  background-color: var(--Zusatzknopf);
 }
+
 .Resultatknopf {
   width: 120px;
   height: 50px;
-  background-color: limegreen;
-  margin-top: 0;
+  background-color: var(--Resultatknopf);
   margin-bottom: 5px;
   margin-left: auto; /* schiebt den Gleichknopf an den rechten Rand */
   margin-right: 10px;
@@ -168,38 +242,25 @@ h1 {
   align-items: center;
   justify-content: center;
   border-radius: 50px;
-  box-shadow: 5px 7px 0px rgba(0, 100, 0, 0.404);
+  box-shadow: 5px 7px 0px var(--Operatorknopfschatten);
 }
-.Resultatknopf:hover {
-  filter: brightness(0.9);
-  cursor: pointer;
-}
-
 
 .Kommaknopf {
   width: 50px;
   height: 50px;
   margin-bottom: 10px;
-  margin-left: 10px;  
-  background-color: rgb(0, 225, 255);
-  border: 5px solid rgb(0, 70, 70);
+  margin-left: 10px;
+  background-color: var(--Kommaknopf);
+  border: 5px solid var(--Kommaknopfrahmen);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgb(0, 0, 0);
+  color: var(--Knopfschrift);
   border-radius: 50px; /* Runde Knöpfe */
-  box-shadow: 0 0 0 5px rgba(0, 59, 223, 0.705);
+  box-shadow: 0 0 0 5px var(--Kommaknopfschatten);
 }
-
-
-.Kommaknopf:hover {
-filter: brightness(0.9);
-cursor: pointer;
-}
-
 
 .Rechner-Zentrum {
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -208,27 +269,241 @@ cursor: pointer;
   box-sizing: border-box;
 }
 
-
 .Rechner-unten {
   margin-top: 25px;
   display: flex;
   align-items: center; /* Kommaknopf und Gleichknopf auf gleicher Höhe */
-  justify-content: space-around;
-  width: 100%;
 }
 
-
-div.Rechenoperatorenknöpfe.minus {
+.minus {
   height: 35px;
   padding-bottom: 5px;
 }
 
+/* Hover-Verhalten für alle Knöpfe gemeinsam */
+.Zahlenknöpfe:hover,
+.Rechenoperatorenknöpfe:hover,
+.Zusatzknöpfe > div:hover,
+.Kommaknopf:hover,
+.Resultatknopf:hover {
+  filter: brightness(0.5); /* dunkelt den Knopf ab */
+  cursor: pointer;
+}
 
+.Umgebung {
+  display: flex;
+  align-items: flex-start; /* Dropdown oben ausrichten statt mittig */
+  gap: 40px; /* Abstand zwischen Dropdown und Rechner */
+  user-select: none;
+}
 
+.Farbauswahl {
+  margin-top: 45px; /* gleiche Höhe wie der Rechner */
+  width: 280px;
+  position: relative; /* macht dieses Element zum Bezugspunkt für die Liste darunter */
+  font-size: 20px;
+  user-select: none;
+}
 
+.Farbauswahlkopf {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  background-color: var(--Boxfüllung);
+  border: 5px solid var(--Boxrahmen);
+  border-radius: 10px;
+  cursor: pointer;
+}
 
+.Pfeil {
+  margin-left: auto; /* schiebt den Pfeil nach rechts, Farbkästchen folgt dahinter */
+}
 
+.Farbkästchen {
+  width: 25px;
+  height: 25px;
+  border: 3px solid var(--Knopfschrift);
+  border-radius: 5px;
+}
 
+.Farbauswahlliste {
+  position: absolute; /* löst die Liste aus dem Textfluss, sie legt sich über den Inhalt darunter */
+  top: 100%; /* beginnt genau unterhalb des Kopfes */
+  width: 100%;
+  margin-top: -5px;
+  background-color: var(--Boxfüllung);
+  border: 5px solid var(--Boxrahmen);
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: none; /* Liste ist zunächst unsichtbar, JS blendet sie ein */
+}
 
+.Farbauswahlliste.Offen {
+  display: block; /* zweite Klasse, die JS zusätzlich setzt, um die Liste zu zeigen */
+}
 
+.Farboption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
 
+.Farboption .Farbkästchen {
+  margin-left: auto;
+}
+
+.Farboption:hover {
+  filter: brightness(0.9);
+}
+
+.Farboption.Aktiv {
+  background-color: blue; /* markiert das gerade gewählte Schema */
+  color: white;
+}
+
+.Neonbereich {
+  margin-top: 45px; /* gleiche Höhe wie der Rechner */
+  width: 280px;
+  font-size: 20px;
+  user-select: none;
+}
+
+.Neonzeile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  background-color: var(--Boxfüllung);
+  border: 5px solid var(--Boxrahmen);
+  border-radius: 10px;
+}
+
+.Schieberegler {
+  margin-left: auto;
+  width: 60px;
+  height: 30px;
+  position: relative;
+  cursor: pointer;
+}
+
+.Schieberegler input {
+  display: none; /* die Checkbox selbst wird ausgeblendet, sichtbar ist nur die Schiene */
+}
+
+.Schiene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--Schiene);
+  border-radius: 30px;
+  transition: background-color 0.2s; /* transition lässt die Farbe weich wechseln statt zu springen, hier über 0.2 Sekunden */
+}
+
+/* ::before erzeugt ein zusätzliches Element im Inneren, hier der runde Knopf auf der Schiene */
+.Schiene::before {
+  content: ""; /* content ist Pflicht, damit ::before überhaupt erscheint; leer, weil nur die Form zählt */
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  background-color: var(--Zahlenknopf);
+  border-radius: 50%;
+  transition: left 0.2s;
+}
+
+/* :checked greift, wenn die Checkbox angekreuzt ist; das + wählt das direkt folgende Geschwisterelement */
+.Schieberegler input:checked + .Schiene {
+  background-color: var(--Resultatknopf);
+}
+
+.Schieberegler input:checked + .Schiene::before {
+  left: 33px; /* schiebt den Knopf nach rechts */
+}
+
+.Neonauswahl {
+  margin-top: 20px; /* Abstand zur Neonzeile darüber */
+  position: relative;
+}
+
+.Neonauswahlkopf {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  background-color: var(--Boxfüllung);
+  border: 5px solid var(--Boxrahmen);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.Neonauswahlliste {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  margin-top: -5px;
+  background-color: var(--Boxfüllung);
+  border: 5px solid var(--Boxrahmen);
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: none;
+}
+
+.Neonauswahlliste.Offen {
+  display: block;
+}
+
+.Neonoption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.Neonoption .Farbkästchen {
+  margin-left: auto;
+}
+
+.Neonoption:hover {
+  filter: brightness(0.9);
+}
+
+.Neonoption.Aktiv {
+  background-color: blue;
+  color: white;
+}
+
+/* [data-neon="true"] greift, sobald der Schalter an ist */
+body[data-neon="true"] .Zahlenknöpfe,
+body[data-neon="true"] .Rechenoperatorenknöpfe,
+body[data-neon="true"] .Zusatzknöpfe > div,
+body[data-neon="true"] .Kommaknopf,
+body[data-neon="true"] .Resultatknopf {
+  border: 3px solid var(--Neonfarbe); /* nur der Rand, der Schlagschatten der Knöpfe bleibt erhalten */
+}
+
+body[data-neon="true"] .Box {
+  border-color: var(--Neonfarbe);
+  box-shadow:
+    0 0 25px 5px var(--Neonfarbe),
+    inset 0 0 25px 5px var(--Neonfarbe); /* inset legt den Schatten nach innen statt nach aussen */
+}
+
+body[data-neon="true"] .Display {
+  box-shadow: inset 0 0 20px 3px var(--Neonfarbe);
+}
+
+body[data-neon="true"] .Farbauswahlkopf,
+body[data-neon="true"] .Farbauswahlliste,
+body[data-neon="true"] .Neonzeile,
+body[data-neon="true"] .Neonauswahlkopf,
+body[data-neon="true"] .Neonauswahlliste {
+  border-color: var(--Neonfarbe);
+  box-shadow: 0 0 15px 3px var(--Neonfarbe);
+}
