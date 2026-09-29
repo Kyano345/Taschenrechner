@@ -14,36 +14,64 @@
   </head>
 
   <body>
+    <div class="Münzanzeige">
+      <div class="Münze"></div>
+      <span id="Münzzahl">0</span>
+    </div>
     <!-- Hauptinhalt der Webseite -->
     <h1>Der supercoole Taschenrechner von Kyano</h1>
 
     <!-- Umgebung: Farbauswahl links, Rechner rechts -->
     <div class="Umgebung">
-      <div class="Farbauswahl" id="Farbauswahl">
-        <div class="Farbauswahlkopf" id="Farbauswahlkopf">
-          <span>Kontrastauswahl</span>
-          <!-- span ist ein Textbehälter ohne eigene Darstellung, nur zum Gruppieren -->
-          <span class="Pfeil" id="Pfeil">▸</span>
-          <span class="Farbkästchen" id="Kopffarbkästchen"></span>
+      <div class="Linkespalte">
+        <div class="Farbauswahl" id="Farbauswahl">
+          <div class="Farbauswahlkopf" id="Farbauswahlkopf">
+            <span>Kontrastauswahl</span>
+            <!-- span ist ein Textbehälter ohne eigene Darstellung, nur zum Gruppieren -->
+            <span class="Pfeil" id="Pfeil">▸</span>
+            <span class="Farbkästchen" id="Kopffarbkästchen"></span>
+          </div>
+
+          <div class="Farbauswahlliste" id="Farbauswahlliste">
+            <!-- data-schema speichert den Namen des Schemas direkt am Element, damit JS ihn auslesen kann -->
+            <div class="Farboption" data-schema="Standard">
+              <span>Standard</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Farboption" data-schema="Krautgarten">
+              <span>Krautgarten</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Farboption" data-schema="Herbstlaub">
+              <span>Herbstlaub</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Farboption" data-schema="Lorentpalette">
+              <span>Lorentpalette</span>
+              <span class="Farbkästchen"></span>
+            </div>
+          </div>
         </div>
 
-        <div class="Farbauswahlliste" id="Farbauswahlliste">
-          <!-- data-schema speichert den Namen des Schemas direkt am Element, damit JS ihn auslesen kann -->
-          <div class="Farboption" data-schema="Standard">
-            <span>Standard</span>
-            <span class="Farbkästchen"></span>
+        <div class="Umrechner" id="Umrechner">
+          <div class="Umrechnerkopf" id="Umrechnerkopf">
+            <span>Umrechner</span>
+            <span class="Pfeil" id="Umrechnerpfeil">▸</span>
           </div>
-          <div class="Farboption" data-schema="Krautgarten">
-            <span>Krautgarten</span>
-            <span class="Farbkästchen"></span>
-          </div>
-          <div class="Farboption" data-schema="Herbstlaub">
-            <span>Herbstlaub</span>
-            <span class="Farbkästchen"></span>
-          </div>
-          <div class="Farboption" data-schema="Lorentpalette">
-            <span>Lorentpalette</span>
-            <span class="Farbkästchen"></span>
+
+          <div class="Umrechnerliste" id="Umrechnerliste">
+            <!-- data-einheit ist das Kürzel, mit dem JS die Einheit erkennt -->
+            <div class="Einheit" data-einheit="in">Inch</div>
+            <div class="Einheit" data-einheit="cm">Zentimeter</div>
+            <div class="Einheit" data-einheit="ft">Feet</div>
+            <div class="Einheit" data-einheit="m">Meter</div>
+            <div class="Einheit" data-einheit="mi">Mile</div>
+            <div class="Einheit" data-einheit="km">Kilometer</div>
+            <div class="Einheit" data-einheit="oz">Ounce</div>
+            <div class="Einheit" data-einheit="g">Gramm</div>
+            <div class="Einheit" data-einheit="lb">Pound</div>
+            <div class="Einheit" data-einheit="kg">Kilogramm</div>
+            <div class="Umrechnenknopf" id="Umrechnenknopf">→</div>
           </div>
         </div>
       </div>
@@ -130,6 +158,35 @@
               <span>Rot</span>
               <span class="Farbkästchen"></span>
             </div>
+          </div>
+        </div>
+        <div class="Feuerwerkknopf" id="Feuerwerkknopf">Feuerwerk</div>
+        <div class="Partyknopf" id="Partyknopf">Partymodus</div>
+      </div>
+
+      <div class="Luftschiffbereich">
+        <div class="Luftschiffknopf" id="Luftschiffknopf">
+          Luftschiffspawner
+        </div>
+        <!-- data-richtung legt fest, wohin das Luftschiff fliegt -->
+        <div class="Richtungsknopf Aktiv" data-richtung="zufall">⇄</div>
+        <div class="Richtungsknopf" data-richtung="links">⇐</div>
+        <div class="Richtungsknopf" data-richtung="rechts">⇒</div>
+
+        <div class="Shop">
+          <div class="Shopkopf">Animationsshop</div>
+          <!-- data-preis ist der Preis in Münzen -->
+          <div class="Shopeintrag" data-animation="Konfetti" data-preis="5">
+            Konfetti – 5
+          </div>
+          <div class="Shopeintrag" data-animation="Sterne" data-preis="10">
+            Sterne – 10
+          </div>
+          <div class="Shopeintrag" data-animation="Laser" data-preis="20">
+            Laser – 20
+          </div>
+          <div class="Shopeintrag" data-animation="Goldregen" data-preis="40">
+            Goldregen – 40
           </div>
         </div>
       </div>

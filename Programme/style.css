@@ -298,7 +298,6 @@ h1 {
 }
 
 .Farbauswahl {
-  margin-top: 45px; /* gleiche Höhe wie der Rechner */
   width: 280px;
   position: relative; /* macht dieses Element zum Bezugspunkt für die Liste darunter */
   font-size: 20px;
@@ -506,4 +505,417 @@ body[data-neon="true"] .Neonauswahlkopf,
 body[data-neon="true"] .Neonauswahlliste {
   border-color: var(--Neonfarbe);
   box-shadow: 0 0 15px 3px var(--Neonfarbe);
+}
+
+.Feuerwerkknopf {
+  margin-top: 300px;
+  padding: 15px;
+  background-color: var(--Resultatknopf);
+  color: var(--Knopfschrift);
+  border: 5px solid var(--Boxrahmen);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 0 var(--Operatorknopfschatten); /* Schatten unten erzeugt die Tiefe des 3D-Knopfs */
+}
+
+.Feuerwerkknopf:hover {
+  filter: brightness(0.9);
+}
+
+/* :active greift, solange die Maustaste gedrückt ist */
+.Feuerwerkknopf:active {
+  transform: translateY(
+    6px
+  ); /* translateY verschiebt das Element senkrecht, hier 6px nach unten */
+  box-shadow: 0 2px 0 var(--Operatorknopfschatten); /* flacherer Schatten, der Knopf wirkt eingedrückt */
+}
+
+.Funke {
+  position: fixed; /* fixed positioniert am Fenster, nicht am Dokument, damit Scrollen nichts verschiebt */
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none; /* Klicks gehen durch den Funken hindurch, er blockiert nichts */
+  z-index: 1000; /* z-index bestimmt die Stapelreihenfolge; hoher Wert = liegt über allem anderen */
+  animation: Funkenflug 1s ease-out forwards; /* animation spielt die unten definierte Bewegung ab: 1 Sekunde, zum Schluss abbremsend, Endzustand bleibt erhalten */
+}
+
+/* @keyframes beschreibt den Ablauf einer Animation von Anfang bis Ende */
+@keyframes Funkenflug {
+  from {
+    transform: translate(0, 0) scale(1); /* translate verschiebt waagrecht und senkrecht, scale ändert die Grösse */
+    opacity: 1; /* opacity ist die Sichtbarkeit: 1 voll sichtbar, 0 unsichtbar */
+  }
+  to {
+    transform: translate(var(--Flugx), var(--Flugy)) scale(0.3);
+    opacity: 0;
+  }
+}
+
+.Partyknopf {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: var(--Zusatzknopf);
+  color: var(--Knopfschrift);
+  border: 5px solid var(--Boxrahmen);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 0 var(--Zusatzknopfschatten);
+}
+
+.Partyknopf:hover {
+  filter: brightness(0.9);
+}
+
+.Partyknopf:active {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 var(--Zusatzknopfschatten);
+}
+
+/* Aktiv wird von JS gesetzt, solange der Partymodus läuft */
+.Partyknopf.Aktiv {
+  background-color: var(--Resetknopf);
+}
+
+.Umrechner {
+  margin-top: 250px;
+  width: 280px;
+  font-size: 20px;
+  position: relative;
+}
+
+.Umrechnerkopf {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  background-color: var(--Boxfüllung);
+  border: 5px solid var(--Boxrahmen);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.Umrechnerliste {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  margin-top: -5px;
+  padding: 10px;
+  background-color: var(--Boxfüllung);
+  border: 5px solid var(--Boxrahmen);
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: none;
+  grid-template-columns: repeat(2, 1fr); /* zwei Spalten nebeneinander */
+  gap: 8px;
+}
+
+.Umrechnerliste.Offen {
+  display: grid;
+}
+
+.Einheit,
+.Umrechnenknopf {
+  padding: 8px;
+  font-size: 16px;
+  background-color: var(--Zahlenknopf);
+  color: var(--Knopfschrift);
+  border: 3px solid var(--Zahlenknopfrahmen);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.Einheit:hover,
+.Umrechnenknopf:hover {
+  filter: brightness(0.9);
+}
+
+/* Gewählt markiert die aktuell angeklickte Einheit */
+.Einheit.Gewählt {
+  background-color: blue;
+  color: white;
+}
+
+.Umrechnenknopf {
+  grid-column: span 2; /* span 2 lässt das Element über beide Spalten laufen */
+  background-color: var(--Resultatknopf);
+}
+
+.Linkespalte {
+  display: flex;
+  flex-direction: column; /* Farbauswahl und Umrechner untereinander */
+  margin-top: 45px; /* gleiche Höhe wie der Rechner */
+}
+
+.Luftschiffbereich {
+  margin-top: 45px; /* gleiche Höhe wie der Rechner */
+  width: 200px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  user-select: none;
+}
+
+.Luftschiffknopf,
+.Richtungsknopf {
+  padding: 15px;
+  background-color: var(--Zahlenknopf);
+  color: var(--Knopfschrift);
+  border: 5px solid var(--Boxrahmen);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 0 var(--Zahlenknopfschatten);
+}
+
+.Luftschiffknopf:hover,
+.Richtungsknopf:hover {
+  filter: brightness(0.9);
+}
+
+.Luftschiffknopf:active,
+.Richtungsknopf:active {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 var(--Zahlenknopfschatten);
+}
+
+/* Aktiv markiert die gewählte Flugrichtung */
+.Richtungsknopf.Aktiv {
+  background-color: blue;
+  color: white;
+}
+
+.Luftschiff {
+  position: fixed;
+  top: 20%;
+  width: 180px;
+  height: 70px;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.Hülle {
+  position: absolute;
+  width: 180px;
+  height: 60px;
+  background-color: var(--Schifffarbe);
+  border-radius: 50%; /* macht aus dem Rechteck eine Ellipse */
+  border: 3px solid rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+}
+
+.Gondel {
+  position: absolute;
+  top: 52px;
+  left: 70px;
+  width: 40px;
+  height: 18px;
+  background-color: #444;
+  border-radius: 6px;
+}
+
+.Heckflosse {
+  position: absolute;
+  top: 12px;
+  left: -8px;
+  width: 30px;
+  height: 36px;
+  background-color: var(--Schifffarbe);
+  border: 3px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px 20px 20px 4px; /* vier Werte: links oben, rechts oben, rechts unten, links unten */
+  box-sizing: border-box;
+}
+
+/* Flug von links nach rechts über den ganzen Bildschirm */
+@keyframes Flugrechts {
+  from {
+    left: -150px;
+    transform: scaleX(
+      1
+    ); /* scaleX spiegelt waagrecht: 1 normal, -1 gespiegelt */
+  }
+  to {
+    left: 100%;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes Fluglinks {
+  from {
+    left: 100%;
+    transform: scaleX(-1);
+  }
+  to {
+    left: -150px;
+    transform: scaleX(-1);
+  }
+}
+
+.Münzanzeige {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 28px;
+  color: #ffd700;
+  z-index: 1001;
+  user-select: none;
+}
+
+.Münze {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #ffd700;
+  border: 3px solid #b8860b;
+  box-sizing: border-box;
+}
+
+.Shop {
+  margin-top: 20px; 
+  width: 100%;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  user-select: none;
+}
+
+.Shopkopf {
+  padding: 10px;
+  background-color: var(--Boxfüllung);
+  color: var(--Knopfschrift);
+  border: 5px solid var(--Boxrahmen);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.Shopeintrag {
+  padding: 12px;
+  background-color: var(--Zusatzknopf);
+  color: var(--Knopfschrift);
+  border: 5px solid var(--Boxrahmen);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 0 var(--Zusatzknopfschatten);
+}
+
+.Shopeintrag:hover {
+  filter: brightness(0.9);
+}
+
+.Shopeintrag:active {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 var(--Zusatzknopfschatten);
+}
+
+/* Gekauft markiert freigeschaltete Animationen */
+.Shopeintrag.Gekauft {
+  background-color: var(--Resultatknopf);
+}
+
+.Konfetti,
+.Stern,
+.Laser,
+.Goldstück {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.Konfetti {
+  width: 12px;
+  height: 20px;
+  animation: Konfettifall 3s linear forwards;
+}
+
+@keyframes Konfettifall {
+  from {
+    transform: translateY(0) rotate(0deg); /* rotate dreht das Element um den angegebenen Winkel */
+    opacity: 1;
+  }
+  to {
+    transform: translateY(105vh) rotate(var(--Drehung)); /* vh ist ein Prozent der Fensterhöhe, 105vh also knapp unter den unteren Rand */
+    opacity: 0.8;
+  }
+}
+
+.Stern {
+  font-size: 30px;
+  color: #fff8b0;
+  text-shadow: 0 0 15px #ffd700; /* text-shadow legt einen Schein um den Text */
+  animation: Sternfunkeln 2s ease-in-out forwards;
+}
+
+@keyframes Sternfunkeln {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.Laser {
+  width: 0;
+  height: 6px;
+  border-radius: 3px;
+  animation: Laserschuss 1.5s ease-out forwards;
+}
+
+@keyframes Laserschuss {
+  0% {
+    width: 0;
+    left: 0;
+  }
+  40% {
+    width: 60vw; /* vw ist ein Prozent der Fensterbreite */
+    left: 0;
+  }
+  100% {
+    width: 0;
+    left: 100%;
+  }
+}
+
+.Goldstück {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #ffd700;
+  border: 3px solid #b8860b;
+  box-sizing: border-box;
+  animation: Goldfall 3s linear forwards;
+}
+
+@keyframes Goldfall {
+  from {
+    transform: translateY(0) rotateY(0deg); /* rotateY dreht um die senkrechte Achse, die Münze wirkt dadurch wie gekippt */
+  }
+  to {
+    transform: translateY(105vh) rotateY(1440deg);
+  }
 }
