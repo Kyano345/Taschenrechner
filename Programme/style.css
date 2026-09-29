@@ -919,3 +919,8 @@ body[data-neon="true"] .Neonauswahlliste {
     transform: translateY(105vh) rotateY(1440deg);
   }
 }
+
+
+p {
+  font-size: xx-large;
+}
