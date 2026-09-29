@@ -1,0 +1,198 @@
+<!doctype html>
+<!-- Dokumenttyp als HTML5 deklarieren -->
+<html lang="de">
+  <!--Sprache auf Deutsch setzen-->
+  <head>
+    <meta charset="UTF-8" />
+    <!--Sonderzeichen korrekt darstellen-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Responsives Design ermöglichen für Geräte -->
+    <title>Taschenrechnerprojekt</title>
+    <!-- Titel der Webseite -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Verknüpfung mit der CSS-Datei für das Design -->
+  </head>
+
+  <body>
+    <div class="Münzanzeige">
+      <div class="Münze"></div>
+      <span id="Münzzahl">0</span>
+    </div>
+    <!-- Hauptinhalt der Webseite -->
+    <h1>Der supercoole Taschenrechner von Kyano</h1>
+
+    <!-- Umgebung: Farbauswahl links, Rechner rechts -->
+    <div class="Umgebung">
+      <div class="Linkespalte">
+        <div class="Farbauswahl" id="Farbauswahl">
+          <div class="Farbauswahlkopf" id="Farbauswahlkopf">
+            <span>Kontrastauswahl</span>
+            <!-- span ist ein Textbehälter ohne eigene Darstellung, nur zum Gruppieren -->
+            <span class="Pfeil" id="Pfeil">▸</span>
+            <span class="Farbkästchen" id="Kopffarbkästchen"></span>
+          </div>
+
+          <div class="Farbauswahlliste" id="Farbauswahlliste">
+            <!-- data-schema speichert den Namen des Schemas direkt am Element, damit JS ihn auslesen kann -->
+            <div class="Farboption" data-schema="Standard">
+              <span>Standard</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Farboption" data-schema="Krautgarten">
+              <span>Krautgarten</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Farboption" data-schema="Herbstlaub">
+              <span>Herbstlaub</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Farboption" data-schema="Lorentpalette">
+              <span>Lorentpalette</span>
+              <span class="Farbkästchen"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="Umrechner" id="Umrechner">
+          <div class="Umrechnerkopf" id="Umrechnerkopf">
+            <span>Umrechner</span>
+            <span class="Pfeil" id="Umrechnerpfeil">▸</span>
+          </div>
+
+          <div class="Umrechnerliste" id="Umrechnerliste">
+            <!-- data-einheit ist das Kürzel, mit dem JS die Einheit erkennt -->
+            <div class="Einheit" data-einheit="in">Inch</div>
+            <div class="Einheit" data-einheit="cm">Zentimeter</div>
+            <div class="Einheit" data-einheit="ft">Feet</div>
+            <div class="Einheit" data-einheit="m">Meter</div>
+            <div class="Einheit" data-einheit="mi">Mile</div>
+            <div class="Einheit" data-einheit="km">Kilometer</div>
+            <div class="Einheit" data-einheit="oz">Ounce</div>
+            <div class="Einheit" data-einheit="g">Gramm</div>
+            <div class="Einheit" data-einheit="lb">Pound</div>
+            <div class="Einheit" data-einheit="kg">Kilogramm</div>
+            <div class="Umrechnenknopf" id="Umrechnenknopf">→</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="Box">
+        <div class="Display" id="Display">0</div>
+
+        <div class="Rechner-Zentrum">
+          <div class="Zusatzknöpfe">
+            <div class="Löschknopf">&lt;=</div>
+            <!--&lt weil < wird für tags benutzt-->
+
+            <div class="Wurzelknopf">√x</div>
+            <div class="Resetknopf">RA</div>
+            <div class="Quadratknopf">x^2</div>
+            <div class="Potenzknopf">x^y</div>
+          </div>
+
+          <div class="Zahlen-und-Operatoren">
+            <div class="Zahlenbox">
+              <div class="Zahlenknöpfe">1</div>
+              <div class="Zahlenknöpfe">2</div>
+              <div class="Zahlenknöpfe">3</div>
+              <div class="Zahlenknöpfe">4</div>
+              <div class="Zahlenknöpfe">5</div>
+              <div class="Zahlenknöpfe">6</div>
+              <div class="Zahlenknöpfe">7</div>
+              <div class="Zahlenknöpfe">8</div>
+              <div class="Zahlenknöpfe">9</div>
+              <div class="Zahlenknöpfe null">0</div>
+            </div>
+
+            <div class="Rechenoperator">
+              <div class="Rechenoperatorenknöpfe plus">+</div>
+              <div class="Rechenoperatorenknöpfe minus">-</div>
+              <div class="Rechenoperatorenknöpfe mal">x</div>
+              <div class="Rechenoperatorenknöpfe durch">÷</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="Rechner-unten">
+          <div class="Kommaknopf">.</div>
+          <div class="Resultatknopf">=</div>
+        </div>
+      </div>
+
+      <div class="Neonbereich">
+        <div class="Neonzeile">
+          <span>Neon</span>
+          <!-- label verbindet Text und Eingabefeld; ein Klick darauf schaltet die Checkbox -->
+          <label class="Schieberegler">
+            <!-- checkbox = Ankreuzfeld mit zwei Zuständen, hier unsichtbar und durch CSS ersetzt -->
+            <input type="checkbox" id="Neonschalter" />
+            <span class="Schiene"></span>
+          </label>
+        </div>
+
+        <div class="Neonauswahl" id="Neonauswahl">
+          <div class="Neonauswahlkopf" id="Neonauswahlkopf">
+            <span>Neonfarbe</span>
+            <span class="Pfeil" id="Neonpfeil">▸</span>
+            <span class="Farbkästchen" id="Neonkopffarbkästchen"></span>
+          </div>
+
+          <div class="Neonauswahlliste" id="Neonauswahlliste">
+            <div class="Neonoption" data-neonfarbe="Grün">
+              <span>Grün</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Neonoption" data-neonfarbe="Hellblau">
+              <span>Hellblau</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Neonoption" data-neonfarbe="Dunkelblau">
+              <span>Dunkelblau</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Neonoption" data-neonfarbe="Orange">
+              <span>Orange</span>
+              <span class="Farbkästchen"></span>
+            </div>
+            <div class="Neonoption" data-neonfarbe="Rot">
+              <span>Rot</span>
+              <span class="Farbkästchen"></span>
+            </div>
+          </div>
+        </div>
+        <div class="Feuerwerkknopf" id="Feuerwerkknopf">Feuerwerk</div>
+        <div class="Partyknopf" id="Partyknopf">Partymodus</div>
+      </div>
+
+      <div class="Luftschiffbereich">
+        <div class="Luftschiffknopf" id="Luftschiffknopf">
+          Luftschiffspawner
+        </div>
+        <!-- data-richtung legt fest, wohin das Luftschiff fliegt -->
+        <div class="Richtungsknopf Aktiv" data-richtung="zufall">⇄</div>
+        <div class="Richtungsknopf" data-richtung="links">⇐</div>
+        <div class="Richtungsknopf" data-richtung="rechts">⇒</div>
+
+        <div class="Shop">
+          <div class="Shopkopf">Animationsshop</div>
+          <!-- data-preis ist der Preis in Münzen -->
+          <div class="Shopeintrag" data-animation="Konfetti" data-preis="5">
+            Konfetti – 5
+          </div>
+          <div class="Shopeintrag" data-animation="Sterne" data-preis="10">
+            Sterne – 10
+          </div>
+          <div class="Shopeintrag" data-animation="Laser" data-preis="20">
+            Laser – 20
+          </div>
+          <div class="Shopeintrag" data-animation="Goldregen" data-preis="40">
+            Goldregen – 40
+          </div>
+        </div>
+      </div>
+      <div><a href="Ehrenmeldungen.html">Ehrenmeldungen</a></div>
+    </div>
+
+    <script src="Funktionen.js"></script>
+  </body>
+</html>
